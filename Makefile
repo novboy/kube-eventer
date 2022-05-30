@@ -1,6 +1,6 @@
 all: build
 
-PREFIX?=registry.aliyuncs.com/acs
+PREFIX?=aimacity
 FLAGS=
 ARCH?=amd64
 ALL_ARCHITECTURES=amd64 arm arm64 ppc64le s390x
@@ -35,9 +35,13 @@ test-unit-cov: clean sanitize build
 	hack/coverage.sh
 
 docker-container:
-	docker build --pull -t $(PREFIX)/kube-eventer-$(ARCH):$(VERSION)-$(GIT_COMMIT)-aliyun -f deploy/Dockerfile .
+	docker build --pull -t $(PREFIX)/kube-eventer:$(VERSION)-$(GIT_COMMIT)-aliyun -f deploy/Dockerfile .
+
+docker:
+	docker buildx build --push --platform linux/amd64,linux/arm64 -t $(PREFIX)/kube-eventer:$(VERSION) -f deploy/Dockerfile .
+
 
 clean:
 	rm -f kube-eventer
 
-.PHONY: all build sanitize test-unit test-unit-cov docker-container clean fmt
+.PHONY: all build sanitize test-unit test-unit-cov docker-container clean fmt docker push

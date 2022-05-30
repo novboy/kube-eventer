@@ -53,7 +53,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       serviceAccount: kube-eventer
       containers:
-        - image: registry.aliyuncs.com/acs/kube-eventer-amd64:v1.2.0-484d9cd-aliyun
+        - image: aimacity/kube-eventer:v1.2.0-105f5fd-aliyun
           name: kube-eventer
           command:
             - "/kube-eventer"
